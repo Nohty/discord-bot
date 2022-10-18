@@ -1,1 +1,1 @@
-# nohty-discord-bot
+# discord-bot
