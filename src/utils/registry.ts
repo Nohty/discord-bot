@@ -51,6 +51,38 @@ export async function registerEvents(client: DiscordClient, dir: string) {
   }
 }
 
-export async function syncCommands(client: DiscordClient) {}
+/**
+ * Syncs the commands with the Discord API.
+ * @param client The client to register the slash commands to.
+ */
+export async function syncCommands(client: DiscordClient) {
+  const guilds = client.guilds.values();
+
+  for (const guild of guilds) {
+    const commands = await client.getGuildCommands(guild.id);
+    console.log(`[DEV] Checking commands for ${guild.name}...`);
+
+    for (const command of commands) {
+      if (!client.commands.has(command.name)) {
+        console.log(`[DEV] Command ${command.name} in guild ${guild.name} is not registered, deleting...`);
+        await client.deleteGuildCommand(guild.id, command.id);
+      }
+    }
+
+    for (const command of client.commands.values()) {
+      const registeredCommand = commands.find((c) => c.name === command.command.name);
+
+      if (!registeredCommand) {
+        console.log(`[DEV]  Command ${command.command.name} is not registered in guild ${guild.name}, registering...`);
+        await client.createGuildCommand(guild.id, command.command);
+      }
+
+      if (registeredCommand && command.command.description !== registeredCommand.description) {
+        console.log(`[DEV] Command ${command.command.name} in guild ${guild.name} is outdated, updating...`);
+        await client.editGuildCommand(guild.id, registeredCommand.id, command.command);
+      }
+    }
+  }
+}
 
 type ClassType = "event" | "command";
