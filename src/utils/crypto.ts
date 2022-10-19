@@ -1,6 +1,6 @@
 import { CipherCCMTypes, createCipheriv, createDecipheriv, randomBytes } from "crypto";
+import speakeasy, { GeneratedSecret } from "speakeasy";
 import { toBuffer } from "qrcode";
-import { GeneratedSecret, generateSecret, totp } from "speakeasy";
 
 /**
  * A class for encrypting and decrypting data.
@@ -77,7 +77,7 @@ export class Crypto {
    * @returns A random string of length 16.
    */
   public create2FAKey(): GeneratedSecret {
-    return generateSecret({ name: this._name });
+    return speakeasy.generateSecret({ name: this._name });
   }
 
   /**
@@ -96,6 +96,6 @@ export class Crypto {
    * @returns Whether the code is valid or not
    */
   public verify2FA(secret: string, code: string): boolean {
-    return totp.verify({ secret, encoding: "ascii", token: code });
+    return speakeasy.totp.verify({ secret, encoding: "ascii", token: code });
   }
 }
