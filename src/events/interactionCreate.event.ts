@@ -11,8 +11,8 @@ export default class InteractionCreateEvent extends BaseEvent {
       const command = client.commands.get(interaction.data.name);
 
       if (command) {
-        const { permissions } = command;
-        if (permissions.disabled) return;
+        const { options } = command;
+        if (options.disabled) return;
 
         command.run(client, interaction);
       }

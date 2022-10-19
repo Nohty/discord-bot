@@ -12,7 +12,7 @@ export abstract class BaseCommand {
    * @param _command The command structure.
    * @param _permissions The permissions for the command.
    */
-  constructor(private _command: ChatInputApplicationCommandStructure, private _permissions: IBaseCommandPermissions) {}
+  constructor(private _command: ChatInputApplicationCommandStructure, private _options: IBaseCommandOptions) {}
 
   /**
    * Returns the command structure.
@@ -24,8 +24,8 @@ export abstract class BaseCommand {
   /**
    * Returns the permissions for the command.
    */
-  public get permissions() {
-    return this._permissions;
+  public get options() {
+    return this._options;
   }
 
   /**
@@ -36,14 +36,14 @@ export abstract class BaseCommand {
   public abstract run(client: DiscordClient, interaction: CommandInteraction): Promise<any>;
 }
 
-export interface IBaseCommandPermissions {
+export interface IBaseCommandOptions {
   disabled?: boolean;
   timeout?: number;
   permissions?: "everyone" | "moderator" | "admin" | "owner";
-  customPermissions?: IBaseCommandCustomPermissions;
+  customPermissions?: IBaseCommandPermissions;
 }
 
-export interface IBaseCommandCustomPermissions {
+export interface IBaseCommandPermissions {
   id: string;
   type: "USER" | "ROLE";
   permission: boolean;
