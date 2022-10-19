@@ -1,4 +1,4 @@
-import { ApplicationCommandStructure, CommandInteraction } from "eris";
+import { ChatInputApplicationCommandStructure, CommandInteraction } from "eris";
 import { DiscordClient } from "./DiscordClient";
 
 /**
@@ -12,10 +12,7 @@ export abstract class BaseCommand {
    * @param _command The command structure.
    * @param _permissions The permissions for the command.
    */
-  constructor(
-    private _command: ApplicationCommandStructure,
-    private _permissions: IBaseCommandPermissions
-  ) {}
+  constructor(private _command: ChatInputApplicationCommandStructure, private _permissions: IBaseCommandPermissions) {}
 
   /**
    * Returns the command structure.
