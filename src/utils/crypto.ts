@@ -53,6 +53,11 @@ export class Crypto {
     return iv.toString("hex") + ":" + encrypted.toString("hex");
   }
 
+  /**
+   * Decrypts a string with the key.
+   * @param text The text to decrypt.
+   * @returns The decrypted text.
+   */
   public decrypt(text: string): string {
     const textParts = text.split(":");
     if (textParts.length !== 2) throw new Error("Invalid cipher text.");
@@ -67,14 +72,29 @@ export class Crypto {
     return decrypted.toString();
   }
 
+  /**
+   * Generates a secret key.
+   * @returns A random string of length 16.
+   */
   public create2FAKey(): GeneratedSecret {
     return generateSecret({ name: this._name });
   }
 
+  /**
+   * Generates a QR code for the secret key.
+   * @param secret The secret key
+   * @returns A QR code for the secret key.
+   */
   public createQR(secret: GeneratedSecret): Promise<Buffer> {
     return toBuffer(secret.otpauth_url!);
   }
 
+  /**
+   * Generates a TOTP token for the secret key.
+   * @param secret The secret key
+   * @param code The code to verify
+   * @returns Whether the code is valid or not
+   */
   public verify2FA(secret: string, code: string): boolean {
     return totp.verify({ secret, encoding: "ascii", token: code });
   }
