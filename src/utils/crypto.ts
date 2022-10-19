@@ -1,6 +1,6 @@
 import { CipherCCMTypes, createCipheriv, createDecipheriv, randomBytes } from "crypto";
 import { toBuffer } from "qrcode";
-import { GeneratedSecret, generateSecret } from "speakeasy";
+import { GeneratedSecret, generateSecret, totp } from "speakeasy";
 
 /**
  * A class for encrypting and decrypting data.
@@ -73,5 +73,9 @@ export class Crypto {
 
   public createQR(secret: GeneratedSecret): Promise<Buffer> {
     return toBuffer(secret.otpauth_url!);
+  }
+
+  public verify2FA(secret: string, code: string): boolean {
+    return totp.verify({ secret, encoding: "ascii", token: code });
   }
 }
