@@ -51,4 +51,6 @@ export async function registerEvents(client: DiscordClient, dir: string) {
   }
 }
 
+export async function syncCommands(client: DiscordClient) {}
+
 type ClassType = "event" | "command";
