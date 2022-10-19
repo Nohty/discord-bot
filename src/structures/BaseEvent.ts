@@ -1,3 +1,4 @@
+import { ClientEvents } from "eris";
 import { DiscordClient } from "./DiscordClient";
 
 /**
@@ -11,7 +12,7 @@ export abstract class BaseEvent {
    * @param _name The name of the event.
    * @param _options The options for the event.
    */
-  constructor(private _name: string, private _options: IBaseEventOptions) {}
+  constructor(private _name: keyof ClientEvents, private _options: IBaseEventOptions) {}
 
   /**
    * Returns the name of the event.
