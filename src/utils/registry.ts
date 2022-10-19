@@ -1,5 +1,6 @@
 import { readdir } from "fs/promises";
 import { join } from "path";
+import { BaseCommand, DiscordClient } from "../structures";
 
 /**
  * Locates all classes in the given directory.
@@ -21,6 +22,19 @@ async function locateClasses<T>(type: ClassType, dir: string): Promise<T[]> {
   }
 
   return classes;
+}
+
+/**
+ * Registers all commands in the given directory.
+ * @param client The client to register the commands to.
+ * @param dir The directory to search for commands.
+ */
+export async function registerCommands(client: DiscordClient, dir: string) {
+  const commands = await locateClasses<BaseCommand>("command", dir);
+
+  for (const command of commands) {
+    client.commands.set(command.command.name, command);
+  }
 }
 
 type ClassType = "event" | "command";
