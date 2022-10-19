@@ -10,7 +10,6 @@ const client = new DiscordClient(process.env.DISCORD_BOT_TOKEN, {
 (async () => {
   await registerCommands(client, join(__dirname, "commands"));
   await registerEvents(client, join(__dirname, "events"));
-  await syncCommands(client);
 
-  client.connect();
+  await client.connect();
 })();
