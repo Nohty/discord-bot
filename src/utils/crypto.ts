@@ -1,4 +1,5 @@
 import { CipherCCMTypes, createCipheriv, createDecipheriv, randomBytes } from "crypto";
+import { toBuffer } from "qrcode";
 import { GeneratedSecret, generateSecret } from "speakeasy";
 
 /**
@@ -68,5 +69,9 @@ export class Crypto {
 
   public create2FAKey(): GeneratedSecret {
     return generateSecret({ name: this._name });
+  }
+
+  public createQR(secret: GeneratedSecret): Promise<Buffer> {
+    return toBuffer(secret.otpauth_url!);
   }
 }
