@@ -1,4 +1,5 @@
 import { CipherCCMTypes, createCipheriv, createDecipheriv, randomBytes } from "crypto";
+import { GeneratedSecret, generateSecret } from "speakeasy";
 
 /**
  * A class for encrypting and decrypting data.
@@ -11,8 +12,9 @@ export class Crypto {
    * Creates a new instance of the Crypto class.
    * @param _algorithm The algorithm to use.
    * @param _key The key to use.
+   * @param _name The name used for the 2FA key.
    */
-  constructor(private _algorithm: CipherCCMTypes, private _key: string) {}
+  constructor(private _algorithm: CipherCCMTypes, private _key: string, private _name: string) {}
 
   /**
    * Returns the algorithm used.
@@ -26,6 +28,13 @@ export class Crypto {
    */
   public get key() {
     return this._key;
+  }
+
+  /**
+   * Returns the name for the 2FA key.
+   */
+  public get name() {
+    return this._name;
   }
 
   /**
@@ -55,5 +64,9 @@ export class Crypto {
     decrypted = Buffer.concat([decrypted, decipher.final()]);
 
     return decrypted.toString();
+  }
+
+  public create2FAKey(): GeneratedSecret {
+    return generateSecret({ name: this._name });
   }
 }
