@@ -1,10 +1,11 @@
 declare global {
-	namespace NodeJS {
-		interface ProcessEnv {
-			NODE_ENV: "development" | "production";
-			DISCORD_BOT_TOKEN: string;
-		}
-	}
+  namespace NodeJS {
+    interface ProcessEnv {
+      NODE_ENV: "development" | "production";
+      DISCORD_BOT_TOKEN: string;
+      CYPHER_KEY: string;
+    }
+  }
 }
 
 export {};
