@@ -4,7 +4,7 @@ import { BaseCommand } from "./BaseCommand";
 
 export class DiscordClient extends Client {
   private _commands = new Map<string, BaseCommand>();
-  private _crypto = new Crypto("aes-256-ccm", process.env.CYPHER_KEY, "Test");
+  private _crypto = new Crypto("aes-256-ccm", process.env.CYPHER_KEY, process.env.NAME_2FA);
 
   constructor(token: string, options: ClientOptions) {
     super(token, options);

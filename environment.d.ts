@@ -4,6 +4,7 @@ declare global {
       NODE_ENV: "development" | "production";
       DISCORD_BOT_TOKEN: string;
       CYPHER_KEY: string;
+      NAME_2FA: string;
     }
   }
 }
